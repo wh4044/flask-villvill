@@ -1,0 +1,9 @@
+{% if search_list %}
+    <ul>
+        {% for search in search_list %}
+        <li><a href="{{ url_for('search.search_detail', search_id=search.id) }}">{{ search.subject }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>목록이 없습니다.</p>
+{% endif %}

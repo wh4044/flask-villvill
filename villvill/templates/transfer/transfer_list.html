@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vill Vill 방 양도해요</title>
+
+    <style>
+        .subtitle
+    {
+        text-align: center;
+        width: 700px;
+        height: 300px;
+        margin-left: 409px;
+    }
+    a {
+        text-decoration: none; 
+        color: inherit;
+    }
+    table {
+        border-collapse: collapse;
+    }
+    .subtitle th, 
+    .subtitle td {
+        border: 1px solid black;
+    }
+    .lower-botton {
+        margin-left: 1050px;
+    }
+    </style>
+</head>
+<body>
+    <!-- <div class="main"> -->
+        <div class="title"><h2>방 양도해요</h2></div>
+        
+        <table class="subtitle table">
+            <thead>
+                <tr class="thead-dark">                
+                    <th>NO.</th>
+                    <th style="width:50%">제목</th>
+                    <th>작성자</th>
+                    <th>작성일시</th>
+                </tr>                  
+            </thead>
+            <tbody>
+            {% if transfer_list %}
+            {% for transfer in transfer_list.items %}
+            <tr>
+                <td> {{ transfer_list.total - ((transfer_list.page - 1) * transfer_list.per_page) - loop.index0 }}</td>
+                <td>
+                    <a href="{{ url_for('transfer.transfer_detail', transfer_id=transfer.id) }}">{{ transfer.subject }}</a>
+                    {% if transfer.transfer_set|length > 0 %}
+                    <span class="text-danger small ml-2">{{ transfer.transfer_set|length }}</span>
+                    {% endif %}
+                </td>
+                <td> {{ transfer.user.nickname }}</td>
+                <td> {{ transfer.create_date|datetime }}</td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="3">목록이 없습니다.</td>
+            </tr>
+            {% endif %}
+            </tbody>
+            
+        </table>
+
+    <!-- 페이징처리 시작 -->
+    <ul class="pagination justify-content-center">
+        <!-- 이전페이지 -->
+        {% if transfer_list.has_prev %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ transfer_list.prev_num }}">이전</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+        </li>
+        {% endif %}
+        {% for page_num in transfer_list.iter_pages() %}
+            {% if page_num %}
+                {% if page_num != transfer_list.page %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+                </li>
+                {% else %}
+                <li class="page-item active" aria-current="page">
+                    <a class="page-link" href="#">{{ page_num }}</a>
+                </li>
+                {% endif %}
+           {% else %}
+                <li class="disabled">
+                    <a class="page-link" href="#">...</a>
+                </li>
+           {% endif %}
+        {% endfor %}
+        <!-- 다음페이지 -->
+        {% if transfer_list.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ transfer_list.next_num }}">다음</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+        </li>
+        {% endif %}
+    </ul>
+    <!-- 페이징처리 끝 -->
+
+        
+        <a href="{{ url_for('transfer.create') }}" class='lower-botton'>글쓰기</a>
+        
+    <!-- </div> -->
+</body>
+
+{% endblock %}

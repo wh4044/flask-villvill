@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Do+Hyeon&display=swap" 
+    rel="stylesheet">
+    <link href="{{ url_for('static', filename='main.css') }}"
+        rel="stylesheet">
+    <link rel="stylesheet" href="main.css"/>     
+    <title>Vill Vill 빌리고 빌려주다</title>
+    <script src="main.js" defer></script>
+</head>
+<body>   
+    <div id="main">
+        <div id="contents"> 
+            <h1>VILL VILL</h1>
+            <a href="{{ url_for('transfer.transfer_li') }}">양도해요</a>
+            <a href="{{ url_for('search.search_li') }}">구해요</a>
+            {% if g.user %}
+            <a href="{{ url_for('auth.logout') }}">{{ g.user.nickname }} (로그아웃) </a>
+            {% else %}
+            <a href="{{ url_for('auth.login') }}">로그인</a>
+            <a href="{{ url_for('auth.signup') }}">회원가입</a>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

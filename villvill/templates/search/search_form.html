@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>방 구해요 글쓰기</title>
+    <style>
+        a {
+        text-decoration: none;
+        color: inherit;
+    }
+    .lower-botton {
+        margin-left: 1030px;
+    }
+    .low{
+        margin-left: 1020px;
+        margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>    
+    <div class="title">
+        <div class="title-title"><h2>글작성</h2></div>
+    </div>
+    <form method="post">
+        {{ form.csrf_token }}
+        <!-- 오류표시 시작 -->
+        {% for field, errors in form.errors.items() %}
+        <div class="alert alert-danger" role="alert">
+            <strong>{{ form[field].label }}</strong>: {{ ', '.join(errors)}}
+        </div>
+        {% endfor %}
+        <!-- 오류표시 끝 -->
+        
+        <div class="form-group">
+            <label for="subject">
+                <input type ="text" class="title title-title my-3" name='subject' id='subject'
+                    value ="{{ form.subject.data or ''}}" placeholder="글 제목">
+            </label>
+        </div>
+
+        <div class='form-group'>
+            <label for="content">
+                <textarea class="subtitle" name='content' id='content' placeholder="내용 작성 및 선택">{{ form.content.data or ''}}</textarea>
+            </label>
+        </div>
+
+        <input type="submit" value="저장하기" class="low btn btn-primary">       
+    </form>
+
+</body>
+
+{% endblock %}

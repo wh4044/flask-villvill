@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Do+Hyeon&display=swap" 
+        rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='register.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원 가입</title>
+
+</head>
+<body>
+    <div id="reg">
+        <h1><a href="{{ url_for('main.index') }}">VILL VILL</a></h1>
+        <div id="contents">
+            <h1>회원가입</h1>
+            <form name="registerform" action="/auth/signup/" enctype="multipart/form-data" method="post">
+                {{ form.csrf_token }}
+                {% include 'form_errors.html' %}
+                <div class='fieldlabel'><label for="username">아이디</label></div>
+                <div>
+                    <input type="text" class='formfield' name='username' id='username'
+                    value="{{ form.username.data or '' }}">
+                </div>
+                
+                <div class='fieldlabel'>
+                    <label for="password1">비밀번호</label>
+                </div>
+                    <input type="password" class='formfield' name='password1' id='password1'
+                    value="{{ form.password1.data or '' }}">
+                
+                <div class='fieldlabel'>
+                    <label for="password2">비밀번호 확인</label>
+                </div>
+                    <input type="password" class='formfield' name='password2' id='password2'
+                    value="{{ form.password2.data or '' }}">
+                
+                <div class='fieldlabel'>
+                    <label for="nickname">닉네임</label>
+                </div>
+                    <input type="text" class='formfield' name='nickname' id='nickname'
+                    value="{{ form.nickname.data or '' }}">
+                
+                <div class='fieldlabel'>
+                    <label for="phnoe">휴대전화 번호</label>
+                </div>
+                    <input type="text" class='formfield' name='phone' id='phone'
+                    value="{{ form.phone.data or '' }}">
+                
+                <div class='fieldlabel'>
+                    <label for="email">이메일</label>
+                </div>
+                    <input type="text" class='formfield' name='email' id='email'
+                    value="{{ form.email.data or '' }}">
+                
+                <div class="formfield">
+                    <label for="gender">성별</label>
+                    
+                        {% for subfield in form.gender %}
+                        <td>{{ subfield }} {{ subfield.label }}
+                        {% endfor %}
+
+                        <!-- {{ form.gender }} -->
+                </div>
+                
+                
+                <div>
+                    <div class="lower">학생증 사진 <input type=file name=image></div>
+                </div>
+                
+                <button class='lower-botton' type='submit'>회원가입</button>
+            
+        </form>
+        
+        </div>
+    </div>
+</body>

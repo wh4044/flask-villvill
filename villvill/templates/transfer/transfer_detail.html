@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ transfer.subject }}</title>
+
+    <style>
+        .subtitle
+    {
+        text-align: center;
+        width: 700px;
+        height: 300px;
+        margin-left: 409px;
+    }
+    a {
+        text-decoration: none; 
+        color: inherit;
+    }
+    table {
+        border-collapse: collapse;
+    }
+    .subtitle th, 
+    .subtitle td {
+        border: 1px solid black;
+    }
+    .lower-botton {
+        margin-left: 1020px;
+    }
+    </style>
+</head>
+
+
+<div class="container my-3">
+    <h2 class="border-bottom py-2">{{ transfer.subject }}</h2>
+    <div class="card my-3">
+        <div class="card-body">
+            <div class="card-text" style="white-space: pre-line;">{{ transfer.content }}</div>
+            {% if not images %}
+            <div class="d-flex justify-content-end">
+                {% if transfer.modify_date %}
+                <div class='badge badge-light p-2 text-left mx-3'>
+                    <div class='mb-2'>수정됨</div>
+                    <div>{{ transfer.modify_date|datetime }}</div>
+                </div>
+                {% endif %}
+                <div class="badge badge-light p-2 text-left">
+                    <div class="mb-2">{{ transfer.user.nickname }}</div>
+                    <div>등록된 사진이 없습니다.</div>
+                    <div>{{ transfer.create_date|datetime}}</div>
+                </div>
+                
+            {% else %}
+            {% for img in images %}            
+            <img src="data:;base64,{{ img }}" height="50%"  width="50%"/>
+            <ul></ul>
+            {% endfor %}
+            <div class="d-flex justify-content-end">
+                {% if transfer.modify_date %}
+                <div class='badge badge-light p-2 text-left mx-3'>
+                    <div class='mb-2'>수정됨</div>
+                    <div>{{ transfer.modify_date|datetime }}</div>
+                </div>
+                {% endif %}
+                <div class="badge badge-light p-2 text-left">
+                    <div class="mb-2">{{ transfer.user.nickname }}</div>
+                    <div>{{ transfer.create_date|datetime}}</div>
+                </div>
+                {% endif %}
+            </div>
+            {% if g.user == transfer.user %}
+            <div class="my-3">
+                <a href="{{ url_for('transfer.modify', transfer_id=transfer.id) }}"
+                    class = "btn btn-sm btn-outline-secondary">수정</a>
+                <a href="#" class = " delete btn btn-sm btn-outline-secondary" 
+                data-uri="{{ url_for('transfer.delete', transfer_id=transfer.id) }}">삭제</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <h5 class="border-bottom my-3 py-2">{{ transfer.transfer_set|length }}개의 댓글이 있습니다.</h5>
+    {% for answer in transfer.transfer_set %}
+    <div class="card my-3">
+        <div class="card-body">
+            <div class="card-text" style="white-space: pre-line;">{{ answer.content }}</div>
+            <div class="d-flex justify-content-end">
+                {% if answer.modify_date %}
+                <div class='badge badge-light p-2 text-left mx-3'>
+                    <div class='mb-2'>수정됨</div>
+                    <div>{{ answer.modify_date|datetime }}</div>
+                </div>
+                {% endif %}
+                <div class="badge badge-light p-2 text-left">
+                    <div class="mb-2">{{ answer.user.nickname }}</div>
+                    <div>{{ answer.create_date|datetime}}</div>
+                </div>
+            </div>
+            {% if g.user == answer.user %}
+            <div class='my-3'>
+                <a href="{{ url_for('t_answer.modify', answer_id=answer.id) }}"
+                class='btn btn-sm btn-outline-secondary'>수정</a>
+                <a href="#" class="delete btn btn-sm btn-outline-secondary "
+                    data-uri="{{ url_for('t_answer.delete', answer_id=answer.id) }}">삭제</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+    <form action="{{ url_for('t_answer.create', transfer_id=transfer.id) }}" method="post" class="my-3">
+        {{ form.csrf_token }}
+        <!-- 오류표시 시작 -->
+        {% for field, errors in form.errors.items() %}
+        <div class="alert alert-danger" role="alert">
+            <strong>{{ form[field].label }}</strong>: {{ ', '.join(errors) }}
+        </div>
+        {% endfor %}
+        <!-- 오류표시 끝 -->
+        <div class="form-group">
+            <textarea {% if not g.user %}disabled{% endif %} name="content" id="content" class="form-control" rows="10"></textarea>
+        </div>
+        <input type="submit" value="댓글등록" class="lower-botton btn btn-primary">
+        <a href="{{ url_for('transfer.transfer_li') }}" class="btn">목록 보기</a>
+    </form>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script type='text/javascript'>
+$(document).ready(function(){
+    $(".delete").on('click', function() {
+        if(confirm("정말로 삭제하시겠습니까?")) {
+            location.href = $(this).data('uri');
+        }
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style2.css">
+    <style>
+        .subtitle
+    {
+        text-align: center;
+        width: 700px;
+        height: 300px;
+        margin-left: 409px;
+    }
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+    table {
+        border-collapse: collapse;
+    }
+    .subtitle th, 
+    .subtitle td {
+        border: 1px solid black;
+    }
+    .lower-botton {
+        margin-left: 1050px;
+    }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        
+        <div class="nav-item"><a href="#"><h1>villvill</h1></a></div>
+        
+        <div class="nav-right-items">
+            <div class="nav-item"><input type="submit" value="마이페이지" oneclick="zipsear()"></div>
+            <div class="nav-item"><input type="submit" value="로그아웃" oneclick="zipsear()"></div>
+            <div class="search">
+                <div class="nav-item"><input type="text"></div>
+                <div class="nav-item"><input type="submit" value="검색" oneclick="zipsear()"></div>
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        <div class="title"><h2>양도 받기</h2></div>
+        
+        <table class="subtitle">
+            <tr>                
+                <th>NO.</th>
+                <th>위치</th>
+                <th>제목</th>
+            </tr>                  
+            <tr>
+                <td>1</td>
+                <td>쪽문</td>                
+                <td>
+                    <a href="#">여름 방학 단기 양도 받습니다.</a></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>정문</td>
+                <td><a href="#">시험기간 2주 방 구해요!</a></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>후문</td>
+                <td><a href="#">원룸 양도 받아요~</a></td>
+            </tr>
+            <tr>
+                <td colspan="6"><center>
+                <a href="#"><</a> 
+                <a href="#">1</a> 
+                <a href="#">2</a> 
+                <a href="#">3</a> 
+                <a href="#">4</a> 
+                <a href="#">5</a> 
+                <a href="#">></a> 
+                </center>
+                </td> 
+            </tr>
+        </table>
+        <div class="lower-botton"><button>글쓰기</button></div>
+    </div>
+</body>
