@@ -6,6 +6,7 @@ from ..forms import AnswerForm, QuestionForm
 from .. import db
 from villvill.views.auth_views import login_required
 
+
 bp = Blueprint('search', __name__, url_prefix='/search')
 
 @bp.route('/')
