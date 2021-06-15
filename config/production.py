@@ -2,11 +2,7 @@ from logging.config import dictConfig
 
 from config.default import *
 
-SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://{user}:{pw}@{url}/{db}'.format(
-    user='dbmasteruser',
-    pw='7gfXY&haEj7CBZ1t8Z*.lM5#K;_>M.so',
-    url='ls-c8544688aa3f6ec9c9ee7b69ca4b561f5d31c28a.culcdf0budht.ap-northeast-2.rds.amazonaws.com',
-    db='flask_villvill2')
+SQLALCHEMY_DATABASE_URI = 'sqlite:///{}'.format(os.path.join(BASE_DIR, 'villvill.db'))
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 SECRET_KEY = b'n\x86=+N\xff\x7f\xf8\xfd\xb5\xfdN\xfc\xe6?\x13'
 
