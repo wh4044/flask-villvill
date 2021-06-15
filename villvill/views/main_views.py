@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, url_for, request
+from flask import Blueprint, render_template, url_for, request, current_app
 from werkzeug.utils import redirect
 from werkzeug.utils import secure_filename
 # from villvill.models import ImageTest
@@ -12,6 +12,7 @@ def hello_villvill():
 
 @bp.route('/')
 def index():
+    current_app.logger.info("INFO 레벨로 출력")
     return render_template('main.html')
 
 # @bp.route('/image')
